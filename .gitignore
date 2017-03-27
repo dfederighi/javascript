@@ -1,0 +1,7 @@
+.DS_Store
+.idea/
+.sublime-gulp.cache
+.synchrotron-ignore
+food-journal/v3/dist/
+food-journal/v2/include/js/build/*
+archive/
