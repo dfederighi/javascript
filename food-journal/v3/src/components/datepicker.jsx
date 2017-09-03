@@ -54,7 +54,7 @@ export default class DatePicker extends React.Component {
         return (
             <div className="calendar-container">
                 <div className="prev-control">
-                    <a href="#" onClick={this.prev.bind(this)}><MdChevronLeft /></a>
+                    <a href="#" onClick={this.prev}><MdChevronLeft /></a>
                 </div>
                 <div className="calendar-display">
                     <div className="date-all">
@@ -71,29 +71,33 @@ export default class DatePicker extends React.Component {
                     </div>
                 </div>
                 <div className="next-control">
-                    <a href="#" onClick={this.next.bind(this)}><MdChevronRight /></a>
+                    <a href="#" onClick={this.next}><MdChevronRight /></a>
                 </div>
             </div>
         );
         
     }
 
-    prev(e) {
+	prev = (e) => {
         e.preventDefault();
 
         let state = this.state;
-        let currentMonth = state.month;
-        let currentDate = state.date;
-        let currentYear = state.year;        
+
+		let {
+			month: currentMonth,
+			date: currentDate,
+			year: currentYear
+		} = state;
 
         let beginMonth = (currentDate === 1);         
         let beginYear = (currentMonth === 0);
+		let prevYear = currentYear - 1;
     
         if (beginYear && beginMonth) {
             this.setState({
-                year: currentYear - 1,
+                year: prevYear,
                 month: 11,
-                date: new Date(currentYear - 1, 12, 0).getDate() 
+                date: new Date(prevYear, 12, 0).getDate() 
             });
             return;
         }
@@ -112,14 +116,19 @@ export default class DatePicker extends React.Component {
         return;
     }
 
-    next(e) {
+	next = (e) => {
         e.preventDefault();
 
         let state = this.state;
-        let currentMonth = state.month;
-        let currentDate = state.date;
-        let currentYear = state.year;
-        let lastDateInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+		let {
+			month: currentMonth,
+			date: currentDate,
+			year: currentYear
+		} = state;
+
+		let nextMonth = currentMonth + 1;
+        let lastDateInMonth = new Date(currentYear, nextMonth, 0).getDate();
 
         let endMonth = (currentDate === lastDateInMonth);
         let endYear = (currentMonth === 11);
@@ -135,7 +144,7 @@ export default class DatePicker extends React.Component {
 
         if (!endYear && endMonth) {
             this.setState({
-                month: currentMonth + 1,
+                month: nextMonth,
                 date: 1
             });
             return;

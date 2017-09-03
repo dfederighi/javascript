@@ -5,6 +5,7 @@ import Moment from 'moment';
 import * as actions from '../actions/journalActions';
 import DatePicker from '../components/datepicker';
 import TabsComponent from '../components/tabs';
+import JournalStatus from '../components/journalstatus';
 
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -32,17 +33,18 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-                <DatePicker callback={this.setSelectedDate.bind(this)} />
+                <DatePicker callback={this.setSelectedDate} />
                 <div className="main-container">
                     <MuiThemeProvider muiTheme={muiTheme}>
                         <div>
                             <TabsComponent />
                             <button 
-                                onClick={this.saveData.bind(this)} 
+                                onClick={this.saveData} 
                                 className="saveButton"
                             >
                                 SAVE
                             </button>
+                            <JournalStatus statusOpen={false} />
                         </div>
                     </MuiThemeProvider>
                 </div>
@@ -50,11 +52,11 @@ export default class App extends React.Component {
         );
     }
 
-    saveData() {
+	saveData = () => {
         this.props.dispatch(actions.saveData());
     }
 
-    setSelectedDate(dateState) {
+	setSelectedDate = (dateState) => {
         let props = this.props;
         let dateString = Moment(
             new Date(

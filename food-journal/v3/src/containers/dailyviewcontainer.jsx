@@ -24,20 +24,20 @@ export default class DailyViewContainer extends React.Component {
         return (
             <DailyView  
                 {...this.props.daily} 
-                onHandleCheck={this.handleCheck.bind(this)} 
-                onHandleSelect={this.handleSelect.bind(this)}
+                onHandleCheck={this.handleCheck} 
+                onHandleSelect={this.handleSelect}
             />
         );
 
 	}
 
-    handleCheck(event, value) {
+	handleCheck = (event, value) => {
         let key = event.target.name;
 
         this.props.dispatch(updateDailyLocalUI({[key]: value}));
     }
 
-    handleSelect(id, event, index, value) {
+	handleSelect = (id, event, index, value) => {
         this.props.dispatch(updateDailyLocalUI({[id]: value}));
     }
 

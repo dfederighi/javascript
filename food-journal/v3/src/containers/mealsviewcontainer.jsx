@@ -3,18 +3,12 @@ import { connect } from 'react-redux';
 
 import MealsView from '../components/MealsView';
 import { setMeal, updateMealsLocalUI } from '../actions/journalActions';
+import { MEAL_NAME_VALUES } from '../constants/mealsConfig';
 
-/* Config ??? */
-const mealsMap = {
-    1: 'breakfast',
-    2: 'lunch',
-    3: 'dinner',
-    4: 'snacks'
-};
 
 @connect((store) => {
 
-    let mealName = mealsMap[store.selectedMeal];
+    let mealName = MEAL_NAME_VALUES[store.selectedMeal];
     let selectedMeals = store.meals[store.selectedDate] || {};
     let selectedMeal = selectedMeals[mealName] || {'MealType': store.selectedMeal};
     let localUIData = store.mealsUI || {};
@@ -33,19 +27,19 @@ export default class MealsViewContainer extends React.Component {
 	}
 
 	render() {
-		return (
+        return (
 			<MealsView 
                 {...this.props.meal} 
-                onHandleSelect={this.handleSelect.bind(this)} 
-                onHandleChange={this.handleChange.bind(this)} 
+                onHandleSelect={this.handleSelect} 
+                onHandleChange={this.handleChange} 
             />
 		);
 
 	}
 
-    handleSelect(id, event, index, value) {
+	handleSelect = (id, event, index, value) => {
         let props = this.props;
-        let mealName = mealsMap[props.selectedMeal];
+        let mealName = MEAL_NAME_VALUES[props.selectedMeal];
 
         if (id === 'MealType') {
             props.dispatch(setMeal(value));
@@ -54,11 +48,12 @@ export default class MealsViewContainer extends React.Component {
         }
     }
 
-    handleChange(event, value) {
-        let mealName = mealsMap[this.props.selectedMeal];
+	handleChange = (event, value) => {
+		let props = this.props;
+        let mealName = MEAL_NAME_VALUES[props.selectedMeal];
         let key = event.target.name;
         
-        this.props.dispatch(updateMealsLocalUI(mealName, {[key]: value}));
+        props.dispatch(updateMealsLocalUI(mealName, {[key]: value}));
     }
 	
 }

@@ -158,7 +158,7 @@ export function saveMeals(data) {
 export function saveMeal(data) {
     return (dispatch, getState) => {
         
-        fetch(ASYNC_URL_PREFIX + 'meals/save.php', {
+        return fetch(ASYNC_URL_PREFIX + 'meals/save.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -170,7 +170,7 @@ export function saveMeal(data) {
                 return result.json();
             }
         }).then((json) => {
-            console.log('saveMeal:json:', json);
+            console.log('completed saveMeal:json:', json);
         }).catch((err) => {
             console.log('err:', err);
         });
@@ -192,6 +192,7 @@ export function getDateMeals() {
                 return result.json();
             }
         }).then((jsonResult) => {
+            console.log('completed getDateMeals:jsonResult:', jsonResult);
             dispatch(isFetching(false));
             dispatch(fetchedDaily(jsonResult.journaldates));
             dispatch(fetchedMeals(jsonResult.journalentries));
